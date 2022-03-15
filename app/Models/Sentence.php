@@ -9,4 +9,5 @@ class Sentence extends Model
 {
     use HasFactory;
     protected $table = 'sentences';
+    protected $fillable = ['description', 'meaning', 'language_id'];
 }

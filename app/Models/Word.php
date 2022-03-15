@@ -9,4 +9,5 @@ class Word extends Model
 {
     use HasFactory;
     protected $table = 'words';
+    protected $fillable = ['description', 'meaning', 'note', 'sentence_id', 'language_id'];
 }

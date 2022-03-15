@@ -12,4 +12,15 @@ class WordController extends Controller
         $words = Word::get();
         return view('admin.words.index', compact('words'));
     }
+
+    public function create()
+    {
+        return view('admin.words.create');
+    }
+
+    public function store(Request $request)
+    {
+        Word::create($request->all());
+        return redirect()->route('words.index');
+    }
 }
