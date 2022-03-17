@@ -17,10 +17,10 @@ class CreateWordsTable extends Migration
             $table->increments('id');
             $table->string('description', 160);
             $table->string('meaning', 255);
-            $table->string('note', 255);
-            $table->integer('sentence_id')->unsigned();
+            $table->string('note', 255)->nullable();
+            $table->integer('sentence_id')->unsigned()->nullable();
             $table->foreign('sentence_id')->references('id')->on('sentences')->onDelete('restrict');
-            $table->integer('language_id')->unsigned();
+            $table->integer('language_id')->unsigned()->nullable();
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('restrict');
             $table->timestamps();
         });

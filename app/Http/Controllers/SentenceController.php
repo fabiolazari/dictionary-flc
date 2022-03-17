@@ -23,4 +23,24 @@ class SentenceController extends Controller
         Sentence::create($request->all());
         return redirect()->route('sentences.index');
     }
+
+    public function show($id)
+    {
+        if (!$sentence = Sentence::find($id))
+            return redirect()->route('sentences.index');
+
+        return view('admin.sentences.show', compact('sentence'));
+    }
+
+    public function destroy($id)
+    {
+        if (!$sentence = Sentence::find($id))
+            return redirect()->route('sentences.index');
+
+        $sentence->delete();
+
+        return redirect()
+                ->route('sentences.index')
+                ->with('message', 'Sentença deletada com sucesso!');
+    }
 }

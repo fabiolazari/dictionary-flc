@@ -16,8 +16,8 @@ class CreateSentencesTable extends Migration
         Schema::create('sentences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description', 160);
-            $table->string('meaning', 160);
-            $table->integer('language_id')->unsigned();
+            $table->string('meaning', 255);
+            $table->integer('language_id')->unsigned()->nullable();
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('restrict');
             $table->timestamps();
         });

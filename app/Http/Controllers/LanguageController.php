@@ -23,4 +23,24 @@ class LanguageController extends Controller
         Language::create($request->all());
         return redirect()->route('languages.index');
     }
+
+    public function show($id)
+    {
+        if (!$language = Language::find($id))
+            return redirect()->route('languages.index');
+
+        return view('admin.languages.show', compact('language'));
+    }
+
+    public function destroy($id)
+    {
+        if (!$language = Language::find($id))
+            return redirect()->route('languages.index');
+
+        $language->delete();
+
+        return redirect()
+                ->route('languages.index')
+                ->with('message', 'Língua deletada com sucesso!');
+    }
 }
