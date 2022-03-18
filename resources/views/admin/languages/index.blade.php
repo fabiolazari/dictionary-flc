@@ -10,6 +10,7 @@
 @foreach ($languages as $language)
     <p>
         {{$language->id}} - {{$language->description}}
-        [ <a href="{{ route('languages.show', $language->id) }}">Ver</a> ]
+        [ <a href="{{ route('languages.show', $language->id) }}">Ver</a> ] |
+        [ <a href="{{ route('languages.edit', $language->id) }}">Edit</a> ]
     </p>
 @endforeach

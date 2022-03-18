@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateLanguage;
 use App\Models\Language;
-use Illuminate\Http\Request;
 
 class LanguageController extends Controller
 {
@@ -18,10 +18,13 @@ class LanguageController extends Controller
         return view('admin.languages.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUpdateLanguage $request)
     {
         Language::create($request->all());
-        return redirect()->route('languages.index');
+        
+        return redirect()
+            ->route('languages.index')
+            ->with('message', 'Língua inserida com sucesso!');
     }
 
     public function show($id)
@@ -42,5 +45,25 @@ class LanguageController extends Controller
         return redirect()
                 ->route('languages.index')
                 ->with('message', 'Língua deletada com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        if (!$language = Language::find($id))
+            return redirect()->route('languages.index');
+
+        return view('admin.languages.edit', compact('language'));
+    }
+
+    public function update(StoreUpdateLanguage $request, $id)
+    {
+        if (!$language = Language::find($id))
+            return redirect()->route('languages.index');
+
+        $language->update($request->all());
+
+        return redirect()
+            ->route('languages.index')
+            ->with('message', 'Língua atualizada com sucesso!');
     }
 }

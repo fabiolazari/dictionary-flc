@@ -11,6 +11,7 @@
 @foreach ($words as $word)
     <p>
         {{$word->description}} - {{$word->meaning}} - {{$word->note}} - {{$word->language_id}} - {{$word->sentence_id}}
-        [ <a href="{{ route('words.show', $word->id) }}">Ver</a> ]
+        [ <a href="{{ route('words.show', $word->id) }}">Ver</a> ] |
+        [ <a href="{{ route('words.edit', $word->id) }}">Edit</a> ]
     </p>
 @endforeach

@@ -10,6 +10,6 @@
 
 <form action="{{ route('languages.store') }}" method="post">
     @csrf
-    <input type="text" name="description" id="description" placeholder="Descrição">
+    <input type="text" name="description" id="description" placeholder="Descrição" value="{{ old('description') }}">
     <button type="submit">Enviar</button>
 </form>

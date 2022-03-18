@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateSentence;
 use App\Models\Sentence;
-use Illuminate\Http\Request;
 
 class SentenceController extends Controller
 {
@@ -18,10 +18,13 @@ class SentenceController extends Controller
         return view('admin.sentences.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUpdateSentence $request)
     {
         Sentence::create($request->all());
-        return redirect()->route('sentences.index');
+        
+        return redirect()
+            ->route('sentences.index')
+            ->with('message', 'Sentença inserida com sucesso!');
     }
 
     public function show($id)
@@ -42,5 +45,25 @@ class SentenceController extends Controller
         return redirect()
                 ->route('sentences.index')
                 ->with('message', 'Sentença deletada com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        if (!$sentence = Sentence::find($id))
+            return redirect()->route('sentences.index');
+
+        return view('admin.sentences.edit', compact('sentence'));
+    }
+
+    public function update(StoreUpdateSentence $request, $id)
+    {
+        if (!$sentence = Sentence::find($id))
+            return redirect()->route('sentences.index');
+
+        $sentence->update($request->all());
+
+        return redirect()
+            ->route('sentences.index')
+            ->with('message', 'Sentença atualizada com sucesso!');
     }
 }
