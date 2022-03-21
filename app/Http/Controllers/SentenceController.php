@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateSentence;
 use App\Models\Sentence;
+use Illuminate\Http\Request;
 
 class SentenceController extends Controller
 {
     public function index()
     {
-        $sentences = Sentence::get();
+        $sentences = Sentence::orderBy('description', 'ASC')->paginate();
         return view('admin.sentences.index', compact('sentences'));
     }
 
@@ -65,5 +66,15 @@ class SentenceController extends Controller
         return redirect()
             ->route('sentences.index')
             ->with('message', 'Sentença atualizada com sucesso!');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $sentences = Word::where('description', 'LIKE', "%{$request->search}%")
+                            ->orWhere('meaning', 'LIKE', "%{$request->search}%")
+                            ->orderBy('description', 'ASC')->paginate();
+        return view('admin.sentences.index', compact('sentences', 'filters'));
     }
 }

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateWord;
 use App\Models\Word;
+use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
     public function index()
     {
-        $words = Word::get();
+        $words = Word::orderBy('description', 'ASC')->paginate(1);
         return view('admin.words.index', compact('words'));
     }
 
@@ -66,5 +67,17 @@ class WordController extends Controller
         return redirect()
             ->route('words.index')
             ->with('message', 'Palavra atualizada com sucesso!');
+    }
+
+    public function search(Request $request)
+    {
+        //$filters = $request->all();
+        $filters = $request->except('_token');
+
+        $words = Word::where('description', 'LIKE', "%{$request->search}%")
+                        ->orWhere('meaning', 'LIKE', "%{$request->search}%")
+                        ->orWhere('note', 'LIKE', "%{$request->search}%")
+                        ->orderBy('description', 'ASC')->paginate(1);
+        return view('admin.words.index', compact('words', 'filters'));
     }
 }

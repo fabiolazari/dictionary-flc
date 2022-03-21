@@ -6,7 +6,14 @@
     </div>
 @endif
 
+<form action="{{ route('languages.search') }}" method="post">
+    @csrf
+    <input type="text" name="search" placeholder="Pesquisar">
+    <button type="submit">Filtrar</button>
+</form>
+
 <h1>Languages</h1>
+
 @foreach ($languages as $language)
     <p>
         {{$language->id}} - {{$language->description}}
@@ -14,3 +21,10 @@
         [ <a href="{{ route('languages.edit', $language->id) }}">Edit</a> ]
     </p>
 @endforeach
+
+<hr>
+@if (isset($filters))
+    {{ $languages->appends($filters)->links() }}
+@else
+    {{ $languages->links() }}
+@endif

@@ -6,6 +6,12 @@
     </div>
 @endif
 
+<form action="{{ route('words.search') }}" method="post">
+    @csrf
+    <input type="text" name="search" placeholder="Pesquisar">
+    <button type="submit">Filtrar</button>
+</form>
+
 <h1>Words</h1>
 
 @foreach ($words as $word)
@@ -15,3 +21,10 @@
         [ <a href="{{ route('words.edit', $word->id) }}">Edit</a> ]
     </p>
 @endforeach
+
+<hr>
+@if (isset($filters))
+    {{ $words->appends($filters)->links() }}
+@else
+    {{ $words->links() }}
+@endif

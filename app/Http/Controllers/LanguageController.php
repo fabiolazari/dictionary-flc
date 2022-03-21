@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateLanguage;
 use App\Models\Language;
+use Illuminate\Http\Request;
 
 class LanguageController extends Controller
 {
     public function index()
     {
-        $languages = Language::get();
+        $languages = Language::orderBy('description', 'ASC')->paginate(3);
         return view('admin.languages.index', compact('languages'));
     }
 
@@ -65,5 +66,14 @@ class LanguageController extends Controller
         return redirect()
             ->route('languages.index')
             ->with('message', 'Língua atualizada com sucesso!');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $languages = Word::where('description', 'LIKE', "%{$request->search}%")
+                            ->orderBy('description', 'ASC')->paginate();
+        return view('admin.languages.index', compact('languages', 'filters'));   
     }
 }
