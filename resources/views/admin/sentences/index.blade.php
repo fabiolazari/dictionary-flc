@@ -1,3 +1,9 @@
+@extends('admin.layouts.app')
+
+@section('title','Listagem das sentenças')
+
+@section('content')
+
 <a href="{{ route('sentences.create') }}">Criar nova sentença</a>
 <hr>
 @if (session('message'))
@@ -12,7 +18,7 @@
     <button type="submit">Filtrar</button>
 </form>
 
-<h1>Sentences</h1>
+<h1>Sentenças</h1>
 
 @foreach ($sentences as $sentence)
     <p>
@@ -28,3 +34,5 @@
 @else
     {{ $sentences->links() }}
 @endif
+
+@endsection

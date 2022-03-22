@@ -72,7 +72,7 @@ class LanguageController extends Controller
     {
         $filters = $request->except('_token');
 
-        $languages = Word::where('description', 'LIKE', "%{$request->search}%")
+        $languages = Language::where('description', 'LIKE', "%{$request->search}%")
                             ->orderBy('description', 'ASC')->paginate();
         return view('admin.languages.index', compact('languages', 'filters'));   
     }

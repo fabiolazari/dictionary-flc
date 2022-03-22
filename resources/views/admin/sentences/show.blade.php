@@ -1,3 +1,9 @@
+@extends('admin.layouts.app')
+
+@section('title','Consulta dos dados de sentença')
+
+@section('content')
+
 <h1>Detalhes da sentença {{ $sentence->id }}</h1>
 
 <ul>
@@ -11,3 +17,5 @@
     <input type="hidden" name="_method" value="DELETE">
     <button type="submit">Deletar</button>
 </form>
+
+@endsection

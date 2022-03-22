@@ -72,7 +72,7 @@ class SentenceController extends Controller
     {
         $filters = $request->except('_token');
 
-        $sentences = Word::where('description', 'LIKE', "%{$request->search}%")
+        $sentences = Sentence::where('description', 'LIKE', "%{$request->search}%")
                             ->orWhere('meaning', 'LIKE', "%{$request->search}%")
                             ->orderBy('description', 'ASC')->paginate();
         return view('admin.sentences.index', compact('sentences', 'filters'));

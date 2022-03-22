@@ -1,3 +1,9 @@
+@extends('admin.layouts.app')
+
+@section('title','Listagem das línguas')
+
+@section('content')
+
 <a href="{{ route('languages.create') }}">Criar nova língua</a>
 <hr>
 @if (session('message'))
@@ -12,7 +18,7 @@
     <button type="submit">Filtrar</button>
 </form>
 
-<h1>Languages</h1>
+<h1>Línguas</h1>
 
 @foreach ($languages as $language)
     <p>
@@ -28,3 +34,5 @@
 @else
     {{ $languages->links() }}
 @endif
+
+@endsection

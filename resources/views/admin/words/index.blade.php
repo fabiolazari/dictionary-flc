@@ -1,3 +1,9 @@
+@extends('admin.layouts.app')
+
+@section('title','Listagem das palavras')
+
+@section('content')
+
 <a href="{{ route('words.create') }}">Criar nova palavra</a>
 <hr>
 @if (session('message'))
@@ -12,7 +18,7 @@
     <button type="submit">Filtrar</button>
 </form>
 
-<h1>Words</h1>
+<h1>Palavras</h1>
 
 @foreach ($words as $word)
     <p>
@@ -28,3 +34,5 @@
 @else
     {{ $words->links() }}
 @endif
+
+@endsection

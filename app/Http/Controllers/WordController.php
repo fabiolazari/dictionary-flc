@@ -10,7 +10,7 @@ class WordController extends Controller
 {
     public function index()
     {
-        $words = Word::orderBy('description', 'ASC')->paginate(1);
+        $words = Word::orderBy('description', 'ASC')->paginate();
         return view('admin.words.index', compact('words'));
     }
 
@@ -77,7 +77,7 @@ class WordController extends Controller
         $words = Word::where('description', 'LIKE', "%{$request->search}%")
                         ->orWhere('meaning', 'LIKE', "%{$request->search}%")
                         ->orWhere('note', 'LIKE', "%{$request->search}%")
-                        ->orderBy('description', 'ASC')->paginate(1);
+                        ->orderBy('description', 'ASC')->paginate();
         return view('admin.words.index', compact('words', 'filters'));
     }
 }

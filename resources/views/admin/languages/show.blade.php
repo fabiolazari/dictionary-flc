@@ -1,3 +1,9 @@
+@extends('admin.layouts.app')
+
+@section('title','Consutlta dos dados de língua')
+
+@section('content')
+
 <h1>Detalhes da língua {{ $language->id }}</h1>
 
 <ul>
@@ -9,3 +15,5 @@
     <input type="hidden" name="_method" value="DELETE">
     <button type="submit">Deletar</button>
 </form>
+
+@endsection
