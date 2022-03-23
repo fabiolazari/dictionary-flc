@@ -15,6 +15,15 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('words.index')" :active="request()->routeIs('words')">
+                        {{ __('Palavras') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('sentences.index')" :active="request()->routeIs('sentences')">
+                        {{ __('Sentenças') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('languages.index')" :active="request()->routeIs('languages')">
+                        {{ __('Línguas') }}
+                    </x-nav-link>
                 </div>
             </div>
 
