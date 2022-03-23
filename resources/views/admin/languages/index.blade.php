@@ -23,7 +23,7 @@
 @foreach ($languages as $language)
     <p>
         {{$language->id}} - {{$language->description}}
-        <img src="{{ url("storage/{$language->flag}") }}" alt="{{ $language->description }}" style="max-width: 30px;">
+        <img src="{{ url("storage/languages/{$language->flag}") }}" alt="{{ $language->description }}" style="max-width: 30px;">
         [ <a href="{{ route('languages.show', $language->id) }}">Ver</a> ] |
         [ <a href="{{ route('languages.edit', $language->id) }}">Edit</a> ]
     </p>
