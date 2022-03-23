@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUpdateLanguage extends FormRequest
@@ -23,8 +24,29 @@ class StoreUpdateLanguage extends FormRequest
      */
     public function rules()
     {
-        return [
-            'description' => 'required|min:3|max:160'
+        $id = $this->segment(2);
+
+        $rules = [
+            //'description' => 'nulable|min:3|max:160'
+            //'description' => ['nulable', 'min:3', 'max:160']
+            'description' => [
+
+                'required',
+                'min:3',
+                'max:160',
+                //"unique:languages,description,{$id},id"
+               Rule::unique('languages')->ignore($id)
+            ],
+            'flag' => [
+                'nullable',
+                'image'
+            ]
         ];
+
+        if ($this->method() == 'PUT'){
+            $rules['flag'] = ['nullable', 'image'] ;
+        }
+
+        return $rules;
     }
 }

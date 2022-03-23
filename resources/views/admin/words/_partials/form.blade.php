@@ -7,7 +7,6 @@
 @endif
 
 @csrf
-
 <input type="text" name="description" id="description" placeholder="Descrição" value="{{ $word->description ?? old('description') }}">
 <textarea name="meaning" id="meaning" rows="5" cols="33" placeholder="Significado">{{ $word->meaning ?? old('meaning') }}</textarea>
 <textarea name="note" id="note" rows="5" cols="33" placeholder="Observações">{{ $word->note ?? old('note') }}</textarea>

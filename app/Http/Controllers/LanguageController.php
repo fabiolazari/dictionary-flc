@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdateLanguage;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class LanguageController extends Controller
 {
@@ -21,8 +23,17 @@ class LanguageController extends Controller
 
     public function store(StoreUpdateLanguage $request)
     {
-        Language::create($request->all());
-        
+        $data = $request->all();
+
+        //$request->file('flag');
+        if ($request->flag->isValid()) {
+            $nameFile = Str::of($request->description)->slug('-') . '.' . $request->flag->getClientOriginalExtension();
+            $flag = $request->flag->storeAs('languages', $nameFile);
+            $data['flag'] = $flag;
+        }
+
+        Language::create($data);
+
         return redirect()
             ->route('languages.index')
             ->with('message', 'Língua inserida com sucesso!');
@@ -40,6 +51,9 @@ class LanguageController extends Controller
     {
         if (!$language = Language::find($id))
             return redirect()->route('languages.index');
+
+        if (Storage::exists($language->flag))
+            Storage::delete($language->flag);
 
         $language->delete();
 
@@ -61,7 +75,18 @@ class LanguageController extends Controller
         if (!$language = Language::find($id))
             return redirect()->route('languages.index');
 
-        $language->update($request->all());
+        $data = $request->all();
+
+        if ($request->flag && $request->flag->isValid()) {
+            if (Storage::exists($language->flag))
+                Storage::delete($language->flag);
+
+            $nameFile = Str::of($request->description)->slug('-') . '.' . $request->flag->getClientOriginalExtension();
+            $flag = $request->flag->storeAs('languages', $nameFile);
+            $data['flag'] = $flag;
+        }
+
+        $language->update($data);
 
         return redirect()
             ->route('languages.index')
@@ -74,6 +99,6 @@ class LanguageController extends Controller
 
         $languages = Language::where('description', 'LIKE', "%{$request->search}%")
                             ->orderBy('description', 'ASC')->paginate();
-        return view('admin.languages.index', compact('languages', 'filters'));   
+        return view('admin.languages.index', compact('languages', 'filters'));
     }
 }
